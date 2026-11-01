@@ -1,0 +1,38 @@
+{
+  "name": "sucelso-tech-api",
+  "version": "1.0.0",
+  "description": "API REST do SUCELSO TECH — Sistema Inteligente de Horários Escolares",
+  "main": "src/server.js",
+  "private": true,
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
+    "db:setup": "node scripts/db-setup.js",
+    "db:seed": "node scripts/seed.js",
+    "test": "jest --runInBand"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "setupFiles": [
+      "<rootDir>/tests/env.js"
+    ],
+    "testTimeout": 30000
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.118.0",
+    "cors": "^2.8.6",
+    "dotenv": "^18.0.9",
+    "express": "^5.3.0",
+    "helmet": "^8.3.0",
+    "jsonwebtoken": "^9.0.3",
+    "pg": "^8.23.1",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "jest": "^30.5.2",
+    "supertest": "^7.3.1"
+  }
+}
