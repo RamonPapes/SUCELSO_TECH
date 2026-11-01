@@ -1,0 +1,21 @@
+
+> test
+> node cenario.e2e.js
+
+✔ 1. login com senha errada é recusado
+✔ 2. professora vê disponibilidade apenas de segunda e quarta
+✔ 3. professor que digita /grade é redirecionado
+✔ 4. coordenadora gera a proposta: 76/78 aulas, pendência explicada no painel
+✔ 5. na visão por professor, as aulas da Carla estão só segunda e quarta
+✔ 6. coordenadora ajusta a sala de uma aula (situação "ajustada")
+✔ 7. edição que causa choque é bloqueada com explicação
+✔ 8. fluxo rascunho → em revisão → publicada
+✔ 9. aluno vê a grade oficial (com sala, docente, situação) sem controles de edição e recebe notificação
+✔ 10. aluno que chama PUT /api/horarios direto na API recebe 403
+✔ 11. grade responsiva: abas por dia no celular, sem rolagem horizontal
+✔ 12. após a publicação, nova disponibilidade vira solicitação pendente
+✔ 13. coordenadora aprova; a grade publicada não muda
+✔ 14. painel mostra a ocupação das salas
+✔ 15. histórico e cadastros acessíveis à coordenação
+
+Nenhum erro de console/página/HTTP 5xx.

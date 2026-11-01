@@ -1,0 +1,117 @@
+Testes automatizados da API (Jest + Supertest) — npm test
+
+cenario.test.js
+  ✓ Cenário obrigatório de validação › 1. dados fictícios: ≥ 3 turmas, 6 professores, 8 disciplinas e 5 salas
+  ✓ Cenário obrigatório de validação › 2. professor registra disponibilidade apenas às segundas e quartas
+  ✓ Cenário obrigatório de validação › 3. somente o coordenador solicita a geração automática
+  ✓ Cenário obrigatório de validação › 4a. algoritmo respeita disponibilidades (Carla só às segundas e quartas)
+  ✓ Cenário obrigatório de validação › 4b. não há choques de sala, professor ou turma; pendências são informadas
+  ✓ Cenário obrigatório de validação › 4c. conflitos são exclusivos do coordenador
+  ✓ Cenário obrigatório de validação › 4d. edição que causa choque é recusada (409) com a identificação do conflito
+  ✓ Cenário obrigatório de validação › 5a. coordenador ajusta uma alocação (sala) e o histórico registra antes/depois
+  ✓ Cenário obrigatório de validação › 5b. regras flexíveis exigem confirmação: mover para fora da disponibilidade → 422
+  ✓ Cenário obrigatório de validação › 5c. horário que não é faixa de aula do turno (ex.: intervalo) → 422
+  ✓ Cenário obrigatório de validação › 5d. professor e aluno não alteram alocações (403) e nada muda
+  ✓ Cenário obrigatório de validação › 5e. fluxo de estados: rascunho não publica direto; revisão → publicada
+  ✓ Cenário obrigatório de validação › 5f. versão publicada é imutável (409); alteração exige duplicar
+  ✓ Cenário obrigatório de validação › 6. aluno visualiza a grade publicada da turma, com sala, docente e situação
+  ✓ Cenário obrigatório de validação › 6b. aluno não consegue alterar nem ver rascunhos
+  ✓ Cenário obrigatório de validação › 6c. professor vê a própria grade publicada e as turmas atribuídas
+  ✓ Cenário obrigatório de validação › 7. professor registra nova disponibilidade sem modificar a grade publicada
+  ✓ Versões › publicar uma nova versão arquiva a anterior e notifica os usuários
+  ✓ Versões › somente rascunhos podem ser excluídos; devolver só de em_revisao
+  ✓ Versões › coordenador inclui aula manualmente em rascunho, respeitando conflitos
+  ✓ Versões › validações de entrada da edição
+
+cadastros.test.js
+  ✓ Consultas liberadas a todos os perfis (UC03) › GET /api/disciplinas funciona para aluno, professor e coordenador; exige login
+  ✓ Consultas liberadas a todos os perfis (UC03) › GET /api/salas funciona para aluno, professor e coordenador; exige login
+  ✓ Consultas liberadas a todos os perfis (UC03) › GET /api/turmas funciona para aluno, professor e coordenador; exige login
+  ✓ Consultas liberadas a todos os perfis (UC03) › GET /api/turnos funciona para aluno, professor e coordenador; exige login
+  ✓ Consultas liberadas a todos os perfis (UC03) › GET /api/periodos funciona para aluno, professor e coordenador; exige login
+  ✓ Consultas liberadas a todos os perfis (UC03) › seed atende ao cenário mínimo (3 turmas, 6 professores, 8 disciplinas, 5 salas)
+  ✓ Consultas liberadas a todos os perfis (UC03) › turnos trazem as faixas com o intervalo da grade de exemplo
+  ✓ Cadastros exclusivos do coordenador (RN03) › post /api/disciplinas é negado (403) a aluno e professor
+  ✓ Cadastros exclusivos do coordenador (RN03) › post /api/salas é negado (403) a aluno e professor
+  ✓ Cadastros exclusivos do coordenador (RN03) › put /api/salas/1 é negado (403) a aluno e professor
+  ✓ Cadastros exclusivos do coordenador (RN03) › delete /api/salas/1 é negado (403) a aluno e professor
+  ✓ Cadastros exclusivos do coordenador (RN03) › post /api/turmas é negado (403) a aluno e professor
+  ✓ Cadastros exclusivos do coordenador (RN03) › post /api/turma-disciplinas é negado (403) a aluno e professor
+  ✓ Cadastros exclusivos do coordenador (RN03) › post /api/usuarios é negado (403) a aluno e professor
+  ✓ Cadastros exclusivos do coordenador (RN03) › get /api/usuarios é negado (403) a aluno e professor
+  ✓ Cadastros exclusivos do coordenador (RN03) › get /api/professores é negado (403) a aluno e professor
+  ✓ Cadastros exclusivos do coordenador (RN03) › negativa não altera dados
+  ✓ CRUD pelo coordenador › cria, consulta, altera e exclui sala registrando histórico (RN17)
+  ✓ CRUD pelo coordenador › validação de entrada retorna 400 com detalhes
+  ✓ CRUD pelo coordenador › id inválido retorna 400; inexistente retorna 404
+  ✓ CRUD pelo coordenador › código de disciplina duplicado retorna 409
+  ✓ CRUD pelo coordenador › excluir turma com alunos retorna 409 (integridade referencial)
+  ✓ CRUD pelo coordenador › turno sobreposto a outro retorna 422
+  ✓ CRUD pelo coordenador › faixa fora do turno ou sobreposta retorna 422; válida é criada
+  ✓ CRUD pelo coordenador › período com início depois do fim retorna 422
+  ✓ CRUD pelo coordenador › vínculo turma-disciplina: cria, rejeita duplicado (409) e disciplina inexistente (409)
+  ✓ CRUD pelo coordenador › professor vê apenas os próprios vínculos; aluno apenas os da turma
+  ✓ Usuários › coordenador cria aluno, que consegue logar e tem perfil aluno
+  ✓ Usuários › aluno sem turma é rejeitado (400); e-mail repetido 409; sem conta órfã
+  ✓ Usuários › usuário desativado perde acesso (403)
+  ✓ Usuários › coordenador não pode excluir a si mesmo
+
+relatorios.test.js
+  ✓ Relatórios, histórico e notificações › relatórios e histórico são exclusivos do coordenador
+  ✓ Relatórios, histórico e notificações › ocupação de salas soma as aulas da versão publicada
+  ✓ Relatórios, histórico e notificações › resumo traz contagens e a versão publicada
+  ✓ Relatórios, histórico e notificações › histórico registra geração e publicação com o usuário responsável
+  ✓ Relatórios, histórico e notificações › cada usuário vê e marca apenas as próprias notificações
+  ✓ Relatórios, histórico e notificações › grade publicada pode ser consultada por sala/turma por qualquer perfil, nunca rascunhos
+
+disponibilidades.test.js
+  ✓ Disponibilidade durante a coleta (RF05, RN05) › cenário 2: Carla tem disponibilidade somente às segundas e quartas
+  ✓ Disponibilidade durante a coleta (RF05, RN05) › aluno não acessa disponibilidades (403)
+  ✓ Disponibilidade durante a coleta (RF05, RN05) › professor vê apenas as próprias, mesmo filtrando por outro professor
+  ✓ Disponibilidade durante a coleta (RF05, RN05) › com a coleta aberta a inclusão é imediata (vigente, 201)
+  ✓ Disponibilidade durante a coleta (RF05, RN05) › alteração durante a coleta também é imediata (200)
+  ✓ Disponibilidade durante a coleta (RF05, RN05) › validações: dia inválido e início >= fim (400); sobreposição (422)
+  ✓ Disponibilidade durante a coleta (RF05, RN05) › RN02: professor não altera nem exclui disponibilidade de outro professor (403)
+  ✓ Disponibilidade durante a coleta (RF05, RN05) › exclusão durante a coleta inativa a disponibilidade
+  ✓ Disponibilidade com a coleta encerrada (RN05, RN06) › inclusão vira solicitação pendente (202) e notifica a coordenação
+  ✓ Disponibilidade com a coleta encerrada (RN05, RN06) › alteração vira solicitação; a disponibilidade vigente permanece intacta
+  ✓ Disponibilidade com a coleta encerrada (RN05, RN06) › segunda solicitação para a mesma disponibilidade retorna 409
+  ✓ Disponibilidade com a coleta encerrada (RN05, RN06) › remoção vira solicitação
+  ✓ Disponibilidade com a coleta encerrada (RN05, RN06) › professor não aprova a própria solicitação (403)
+  ✓ Disponibilidade com a coleta encerrada (RN05, RN06) › coordenador aprova inclusão e alteração; a original vira inativa
+  ✓ Disponibilidade com a coleta encerrada (RN05, RN06) › coordenador rejeita a remoção; avaliar de novo retorna 409
+  ✓ Disponibilidade com a coleta encerrada (RN05, RN06) › professor pode cancelar uma solicitação pendente
+  ✓ Disponibilidade com a coleta encerrada (RN05, RN06) › coordenador-docente altera a própria disponibilidade diretamente
+  ✓ Disponibilidade com a coleta encerrada (RN05, RN06) › histórico registra solicitações e avaliações (RN17)
+
+auth.test.js
+  ✓ Autenticação (RF01, RF02) › health check responde e consulta o banco
+  ✓ Autenticação (RF01, RF02) › login com senha errada retorna 401
+  ✓ Autenticação (RF01, RF02) › login com e-mail inválido retorna 400
+  ✓ Autenticação (RF01, RF02) › /api/me sem token retorna 401
+  ✓ Autenticação (RF01, RF02) › token adulterado retorna 401
+  ✓ Autenticação (RF01, RF02) › token assinado com outro segredo retorna 401
+  ✓ Autenticação (RF01, RF02) › token expirado retorna 401
+  ✓ Autenticação (RF01, RF02) › token válido de usuário sem cadastro em usuarios retorna 403
+  ✓ Autenticação (RF01, RF02) › /api/auth/me identifica o perfil de coordenador
+  ✓ Autenticação (RF01, RF02) › /api/auth/me identifica o perfil de ana
+  ✓ Autenticação (RF01, RF02) › /api/auth/me identifica o perfil de aluno
+  ✓ Autenticação (RF01, RF02) › aluno traz a turma; professor traz professor_id
+  ✓ Autenticação (RF01, RF02) › rota inexistente retorna 404 e JSON malformado retorna 400
+  ✓ Autenticação (RF01, RF02) › CORS só libera a origem configurada
+  ✓ Autenticação (RF01, RF02) › login de desenvolvimento não existe com NODE_ENV=production
+
+gerador.test.js
+  ✓ gerarGrade › aloca toda a carga quando há folga e respeita as restrições
+  ✓ gerarGrade › respeita disponibilidade restrita (somente segundas e quartas)
+  ✓ gerarGrade › no máximo 2 aulas da mesma disciplina por dia, geminadas, quando possível
+  ✓ gerarGrade › professor sem disponibilidade no turno gera pendência com motivo
+  ✓ gerarGrade › professor sem nenhuma disponibilidade e sala insuficiente geram motivos específicos
+  ✓ gerarGrade › demanda maior que a disponibilidade: aloca o possível e informa o resto
+  ✓ gerarGrade › salas: uma única sala compartilhada impede duas turmas simultâneas
+  ✓ gerarGrade › reparo por cadeia de ejeção resolve caso que o guloso puro não resolveria
+  ✓ gerarGrade › cenário apertado com várias turmas e professores compartilhados é viável
+  ✓ gerarGrade › minimização de janelas não piora o resultado e mantém as restrições
+  ✓ gerarGrade › é determinístico
+
+Total: 102 de 102 testes passaram (6 suítes).
